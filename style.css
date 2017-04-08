@@ -1,0 +1,88 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    font-family: 'Roboto', sans-serif;
+    font-size: 125%;
+}
+
+body {
+    color: white;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#dropbox {
+    flex: 0;
+    background: #888888;
+    text-align: center;
+    padding: 0.75em;
+    min-width: 15em;
+    max-width: 25em;
+    flex: 1;
+    border-radius: 0.25em;
+    display: flex;
+    flex-direction: column;
+}
+
+#dropbox>div {
+    margin: 0.25em 0.5em;
+}
+
+#outputArea {
+    border-radius: 0.25em;
+    background: black;
+}
+
+#output {
+    flex: 1;
+    padding: 0.5em 1em;
+    font-size: 1.5em;
+}
+
+#buttonArea{
+    flex: 1;
+    display: flex;
+}
+
+#buttonArea>* {
+    flex: 1;
+    margin-right: 0.5em;
+}
+
+#buttonArea>*:last-child {
+    margin-right: 0;
+}
+
+#input {
+    display: none;
+}
+
+.button {
+    cursor: pointer;
+    background-color: #2196F3;
+    border: 1px solid #3473a5;
+    color: #ffffff;
+    padding: 1em 2em;
+    text-align: center;
+    text-decoration: none;
+    font-size: 1em;
+    font-weight: bold;
+    border-radius: 0.25em;
+}
+
+.button:hover {
+    background-color: #0b7ad5;
+    border: 1px solid #285980;
+    color: #ffffff;
+}
+
+.disabledButton, .disabledButton:hover {
+    cursor: no-drop;
+    background-color: #547692;
+    border: none;
+    color: #d0d0d0;
+}

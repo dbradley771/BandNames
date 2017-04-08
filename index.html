@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Band Names</title>
+    <link href="style.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <script>
+        var column1 = [];
+        var column2 = [];
+        
+        function handleFiles(files)  {
+            var file = files[0];
+            if (!file) {
+                document.getElementById("output").innerHTML = "Error uploading file";
+                return;
+            }
+            document.getElementById("output").innerHTML = "Press Generate!";
+            document.getElementById("generateButton").classList.remove("disabledButton");
+            column1 = [];
+            column2 = [];            
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                var fileContents = e.target.result;
+                var lines = fileContents.split('\n');
+                for(var line = 0; line < lines.length; line++){
+                    var text = lines[line].split(',');
+                    column1[column1.length] = text[0];
+                    column2[column2.length] = text[1];
+                }
+            };
+            reader.readAsText(file);
+        }
+        
+        function generateName() {
+            var output = "Upload a list of band names!";
+            if(column1.length != 0 || column2.length != 0) {
+                var column1Num = Math.floor(Math.random() * column1.length);
+                var column2Num = Math.floor(Math.random() * column2.length);
+                output = "<span title=\"" + column1[column1Num] + column2[column1Num] + "\">" + column1[column1Num] + "</span><span title=\"" + column1[column2Num] + column2[column2Num] + "\">" + column2[column2Num] + "</span>";
+            }
+            document.getElementById("output").innerHTML = output;
+        }
+        
+        function noReact(e) {
+            e.stopPropagation();
+            e.preventDefault();
+        }
+
+        function uploadFile(e) {
+            fileElem = document.getElementById("input");
+            if (fileElem) {
+                fileElem.click();
+            }
+        }
+        
+        function highlightDropbox() {
+            document.getElementById("dropbox").style.backgroundColor = "#aaaaaa";
+        }
+        
+        function resetDropbox() {
+            document.getElementById("dropbox").style.backgroundColor = "#888888";
+        }
+        
+        function dragenter(e) {
+            noReact(e);
+            highlightDropbox();
+        }
+        
+        function dragover(e) {
+            noReact(e);
+            highlightDropbox();
+        }
+        
+        function dragleave(e) {
+            noReact(e);
+            resetDropbox();
+        }
+        
+        function drop(e) {
+            noReact(e);
+            resetDropbox();
+
+            var dt = e.dataTransfer;
+            var files = dt.files;
+
+            handleFiles(files);
+        }
+        
+        window.onload = function () {
+            dropbox = document.getElementById("dropbox");
+            dropbox.addEventListener("dragenter", dragenter, false);
+            dropbox.addEventListener("dragover", dragover, false);
+            dropbox.addEventListener("dragleave", dragleave, false);
+            dropbox.addEventListener("drop", drop, false);
+            document.body.addEventListener("dragenter", noReact, false);
+            document.body.addEventListener("dragover", noReact, false);
+            document.body.addEventListener("dragleave", noReact, false);
+            document.body.addEventListener("drop", noReact, false);
+        }
+    </script>
+</head>
+<body>
+    <div id="dropbox">
+        <div id="outputArea">
+            <div id="output">Upload a list of band names!</div>
+        </div>
+        <div id="buttonArea">
+            <input type="file" id="input" onchange="handleFiles(this.files)">
+            <button type="button" class="button" id="uploadButton" onclick="uploadFile(this)">Upload Names</button>
+            <button type="button" class="button disabledButton" id="generateButton" onclick="generateName()">Generate</button>
+        </div>
+    </div>
+</body>
+</html>
